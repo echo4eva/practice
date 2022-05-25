@@ -1,85 +1,81 @@
-# [PARTIAL]
-# longest_substring_without_repeating_character.py
-# echo4eva
-# 5/24/2022
+"""
+[DISCLAIMER]
+Studied this solution for 6 hours, not my solution
+https://leetcode.com/problems/longest-substring-without-repeating-characters/discuss/742926/Simple-Explanation-or-Concise-or-Thinking-Process-and-Example
 
-# 1. Get user input
-# 2. Initialize a substring variable → substring_length_longest → to hold length of longest substring
-# 3. Initialize a substring counter variable → substring_length_temp → to hold length temp
-# 4. Initialize an index variable to hold the start of non-repeating substring → non_repeating_start
-# 5. Initialize an index variable to hold end of above → non_repeating_end
-# 6. For loop
-#     - iterate through the string once, start index 0, end at len - 1
-#     - check if next is within range of [nrs : nre]
-#         - if not in range
-#             - increment end by 1
-#             - increment temp_length by 1
-#         - if in range (repeating)
-#             - save start as the current end
-#             - save end as end + 1
-#             - check if temp_length > longest_length
-#                 - if true → make longest length = temp
-#                 - reset temp
-# 7. return longest length
+[STATUS: SOLVED]
+echo4eva
+longest_substring_without_repeating_characters.py
+5/25/2022
 
-def getLongestSubstringLength(givenString):
-    # gs =  "pwwkew"
-    longestLength = 0
-    tempLength = 1
-    start = 0
-    # the end of slicing in non-inclusive
-    end = 1
+[PRACTICING COMMUNICATING + LEARNING PROCESS]
+https://youtu.be/97ZVBByk74g
 
-    for counter in range(len(givenString) - 1):
-        # c = 0
-        # next = w
-        # slice = [0:1] -> p
-        # c = 1
-        # next = w
-        # slice = [0:2] -> pw
-        # c = 2
-        # next = k
-        # slice [2:3] -> w
-        # c = 3
-        # next = e
-        # slice [2:4] -> wk
-        # c = 4
-        # next = w
-        # slice [2:5] -> wke
-        # c = 5
-        if givenString[counter + 1] not in givenString[start:end]:
-            end += 1
-            tempLength += 1
-            # e = 2
-            # t = 2
-            # e = 4
-            # t = 2
-            # e = 5
-            # t = 3
+[PLAN]
+1. Get user input
+2. Initialize a dictionary to hold all the seen letters
+    - keys → the letters
+    - values → the index in the string, where the letters were last seen
+3. Initialize left and right integer pointers → 0
+    - Help us determine where we are at with the string
+    - Sliding Window(?)
+4. Initialize a integer variable that holds longest substring so far
+5. While loop
+    - Iterate through the whole string
+    - Going to use `right` to determine if something has been seen or not
+    - Condition → while right is less than the length of the string
+    - If current character has been seen
+        - move left until whole sliding window doesn’t have a duplicate of current character
+            - note → left and right are inclusive
+    - Determine if length needs to be updated or not
+    - Update where this current character has been seen
+    - Increment right by one → go to next character
+6. Return the result length
+"""
 
-        else:
-            start = end
-            end += 1
-            if tempLength > longestLength:
-                longestLength = tempLength
-                tempLength = 1
+def getLongestUniqueString(str):
+    # base case -> when user inputs empty string
+    if len(str) == 0: return 0
 
-            # s = 2
-            # e = 3
-            # l = 2
-            # t = 1
-            # s = 5
-            # e = 6
-            # l = 3
+    # keys -> characters
+    # valeus -> index where the character has last been seen
+    seen_chars = {}
+
+    # sliding window pointers, to determine bounds of window
+    left = right = 0
+
+    # holds longest length of a substring
+    length = 1
+
+    while(right < len(str)):
+        # check if current character has been seen or not
+        # use the pointer "right" as a iterator guide
+        current_char = str[right]
+        if str[right] in seen_chars:
+            # move left to either right, or stay
+            # when just doing "right calculation" of max with abba
+            # when detect "last a", left will calculate and go to "first b,"
+            # which it shouldn't do that, it should either go foward not backwards
+            # so that's why we need max(current_left, calculated_next_left)
+            # to understand, need to go through examples by hand
+            left = max(left, seen_chars[current_char] + 1)
+        # similar to "left = max()"
+        # either get max(current_length, or calculated_length)
+        length = max(length, right - left + 1)
+        # update where the character has been seen
+        seen_chars[current_char] = right
+        # move to the next character
+        right += 1
     
-    if tempLength > longestLength:
-        longestLength = tempLength
-    
-    return longestLength
-
+    return length
 
 def main():
-    userInput = input()
-    print(getLongestSubstringLength(userInput))
+    user_input = input()
+    print(getLongestUniqueString(user_input))
 
 main()
+
+# slicing
+str = "abcdefg"
+slice = str[1:4]
+# slice = bcd
