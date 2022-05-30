@@ -5,7 +5,7 @@ check_array.py
 5/29/2022
 
 [PCing UMPIRE Video]
-
+https://youtu.be/zhoyu1JAb_0
 
 [PLAN]
 1. Get user input of `array` and `pieces`
