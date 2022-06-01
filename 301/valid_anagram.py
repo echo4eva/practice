@@ -1,5 +1,5 @@
 """
-[STATUS: WIP]
+[STATUS: SOLVED]
 echo4eva
 valid_anagram.py
 6/1/2022
@@ -45,7 +45,7 @@ def checkAnagram(s, t):
     - add characters to their respective dictionaries
 4. Return the comparison of dictionaries
 """
-def checkAnagram(s, t):
+def checkAnagram2(s, t):
     if len(s) != len(t):
         return False
 
@@ -65,11 +65,15 @@ def checkAnagram(s, t):
             dict_t[ch] += 1
         
     return dict_s == dict_t
+
+def checkAnagram(s,t):
+    return sorted(s) == sorted(t)
     
 def main():
     s = input()
     t = input()
     # print(getASCII(s) == getASCII(t))
     print(checkAnagram(s, t))
+    print(checkAnagram2(s,t))
 
 main()
