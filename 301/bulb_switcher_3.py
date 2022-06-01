@@ -1,5 +1,5 @@
 """
-[STATUS: PARTIAL]
+[STATUS: SOLVED]
 - failed leetcode check, but passed regular checks
 - will study/understand other solutions to complete
 echo4eva
@@ -7,7 +7,7 @@ bulb_switcher_3.py
 5/30/2022
 
 [PCing UMPIRE Video]
-
+https://youtu.be/VxavKmhKGYw
 
 [PLAN]
 1. Get user input of the list of lightbulbs to turn on → bulbs
@@ -24,8 +24,8 @@ bulb_switcher_3.py
             - If they are → increment moments by 1
             - If current == index 0, then it’s already lit
             - Make the next iterator the new current
-"""
 
+[TRY 1]
 def bulbSwitcher(bulbs):
     lit_bulbs = [False] * len(bulbs)
     target_bulb_index = 0
@@ -70,3 +70,35 @@ def main():
     print(bulbSwitcher([5,4,1,2,3]))
 
 main()
+
+[PLAN 2]
+1. Get user input of the list of light bulbs
+2. Initialize a variable to keep track of number of blue light moments
+3. Initialie a variable to hold the “most right” lightbulb seen
+4. For loop
+    - Iterate through the lightbulb list
+    - Keep track of what the max lightbulb seen is
+    - Use max function to determine if need to change “most right” lightbulb
+    - If the most right lightbulb == the iteration + 1
+        - Increment blue light moment by one
+5. Return blue light moments
+"""
+
+def bulbSwitch(bulbs):
+    blue_moments = 0
+    maxBulb = 0
+
+    for i in range(0, len(bulbs)):
+        maxBulb = max(maxBulb, bulbs[i])
+
+        if maxBulb == i+1:
+            blue_moments += 1
+    
+    return blue_moments
+
+def main():
+    user_input = [int(x) for x in input().split()]
+    print(bulbSwitch(user_input))
+
+main()
+
