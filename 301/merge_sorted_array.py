@@ -1,5 +1,5 @@
 """
-[STATUS: WIP]
+[STATUS: SOLVED]
 echo4eva
 merge_sorted_array.py
 6/1/2022
