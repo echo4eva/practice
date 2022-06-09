@@ -6,6 +6,7 @@ echo4eva
 
 [PCing UMPIRE Video]
 https://youtu.be/6amFVJtJpnE -> not working but still tried (will record later of working)
+https://youtu.be/PmXSg6cF_aw -> working (lines 120-121 not included in video)
 
 [PLAN]
 1. Get user input
@@ -82,45 +83,50 @@ def isValidParanthesis(str):
 3. return False
 
 [PLAN 3] TODO: STACK
+1. Get user input
+2. Create a stack list
+    - last in first out
+3. Create a string of open brackets and closing brackets
+4. For loop
+    - iterate through user input
+    - if current char is an open bracket, insert to top of stack
+    - if not
+        - check if the current closing bracket, matches the first open bracket at the top of stack
+        - if true → remove the first index value
+        - if false, then return False
+5. Return comparison if stack is empty or not
 """
 
 def isValidParanthesis(str):
+
     if len(str) % 2 != 0:
         return False
 
-    PERFECT = len(str) // 2
-    valid_counter = 0
-    i = 0
+    stack = []
 
-    while True:
-        print(str)
-        """
-        ( = 40
-        ) = 41
-        [ = 91
-        ] = 93
-        { = 123
-        } = 125
-        """
-        char = ord(str[i])
-        matching_end_index = len(str) - i - 1   
+    open_brackets = "[({"
+    closing_brackets = "])}"
 
-        # "+2" is for { -> } and [ -> ]
-        if (char + 2) == ord(str[i + 1]) or (char + 1) == ord(str[i + 1]):
-            valid_counter += 1
-            str = str[i + 2: len(str)]
-            i = 0 
-
-        elif (char + 2) == ord(str[matching_end_index]) or (char + 1) == ord(str[matching_end_index]):
-            valid_counter += 1
-            str = str[i + 1: len(str) - 1]
-            i = 0
-        
+    for char in str:
+        if char in open_brackets:
+            stack.insert(0, char)
+        elif char in closing_brackets:
+            # ( = 40
+            # ) = 41
+            # [ = 91
+            # ] = 93
+            # { = 123
+            # } = 125
+            if len(stack) == 0:
+                return False
+            if ord(char) == (ord(stack[0]) + 1) or ord(char) == (ord(stack[0]) + 2):
+                stack.pop(0)
+            else:
+                return False
         else:
             return False
-
-        if valid_counter == PERFECT:
-            return True
+    
+    return True
 
 def main():
     # user_input = input()
