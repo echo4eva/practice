@@ -1,5 +1,5 @@
 """
-[STATUS: WIP]
+[STATUS: SOLVED]
 matrix_search.py
 echo4eva
 6/13/2022
