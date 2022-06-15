@@ -72,8 +72,6 @@ def solve(string):
     lps = computeLPSArray(concat)
 
     return len(string) - lps[-1]
-
-
     
 def main():
     user_input = input()
